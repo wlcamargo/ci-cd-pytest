@@ -26,6 +26,11 @@ jobs:
     - name: Run Tests
       run: pytest
 
+    - name: Open Pull Request (on success)
+      if: success()
+      run: gh pr create --base main --head dev-branch --title "Automated Pull Request - Successful Build"
+
+
   cd:
     runs-on: ubuntu-latest
     needs: ci
