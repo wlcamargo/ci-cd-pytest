@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  ci:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,9 +26,9 @@ jobs:
     - name: Run Tests
       run: pytest
 
-  cd:
+  deploy:
     runs-on: ubuntu-latest
-    needs: ci
+    needs: build
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -38,8 +38,12 @@ jobs:
       with:
         python-version: 3.8
 
+
+    - name: Grant Execute Permissions to deploy.sh
+      run: |
+        chmod +x deploy.sh
+
     - name: Deploy to Production
       run: |
-        # Replace the following line with your actual deployment steps
         echo "Deploying to production..."
         ./deploy.sh
